@@ -1,0 +1,22 @@
+quarkus:
+    datasource:
+        db-kind: postgresql
+        jdbc:
+            url: jdbc:postgresql://localhost:5432/postgres
+        password: postgres
+        username: postgres
+    hibernate-orm:
+        database:
+            generation: drop-and-create
+
+example:
+    greeting: Hello world
+    integer: 123
+    boolean: true
+    origin:
+        name: Colombia
+        continent: South America
+    countries:
+        - Colombia
+        - Ethiopia
+        - Brazil

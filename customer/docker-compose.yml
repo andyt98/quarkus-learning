@@ -1,0 +1,16 @@
+version: '3'
+services:
+  customerdb:
+    image: postgres:15.4
+    container_name: customerdb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - customerdb:/var/lib/postgresql/data
+
+volumes:
+  customerdb:
