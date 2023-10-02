@@ -3,8 +3,6 @@ package com.andy.customer.boundary;
 import com.andy.customer.control.CustomerService;
 import com.andy.customer.entity.CustomerCreateRequest;
 import com.andy.customer.entity.CustomerDto;
-import com.andy.customer.entity.CustomerType;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -29,11 +27,6 @@ public class CustomerResource {
     @Context
     UriInfo uriInfo;
 
-    @PostConstruct
-    private void init(){
-        customerService.create(new CustomerCreateRequest("customer1", "customer1@test.com", CustomerType.REGULAR));
-        customerService.create(new CustomerCreateRequest("customer2", "customer2@test.com", CustomerType.VIP));
-    }
 
     @POST
     public Response createCustomer(@Valid CustomerCreateRequest createCustomerRequest) {
@@ -75,16 +68,16 @@ public class CustomerResource {
 
 
     @GET
-    @Path("/{id}")
-    public CustomerDto getCustomerById(@PathParam("id") UUID id) {
-        return customerService.findById(id);
+    @Path("/{uuid}")
+    public CustomerDto getCustomerById(@PathParam("uuid") UUID uui) {
+        return customerService.findById(uui);
     }
 
 
     @DELETE
-    @Path("/{id}")
-    public Response deleteCustomer(@PathParam("id") UUID id) {
-        customerService.delete(id);
+    @Path("/{uuid}")
+    public Response deleteCustomer(@PathParam("uuid") UUID uuid) {
+        customerService.delete(uuid);
         return Response.noContent().build();
     }
 }

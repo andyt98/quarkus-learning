@@ -4,32 +4,21 @@ import com.andy.customer.entity.Customer;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
 public class CustomerRepository implements PanacheRepositoryBase<Customer, UUID> {
 
-    @Override
-    public Optional<Customer> findByIdOptional(UUID uuid) {
-        return PanacheRepositoryBase.super.findByIdOptional(uuid);
+    public Optional<Customer> findByEmailOptional(String email) {
+        return find("email", email).firstResultOptional();
     }
 
-    @Override
-    public List<Customer> listAll() {
-        return PanacheRepositoryBase.super.listAll();
+    public boolean existsWithEmail(String email) {
+        return findByEmailOptional(email).isPresent();
     }
 
-    @Override
-    public void persist(Customer customer) {
-        PanacheRepositoryBase.super.persist(customer);
+    public boolean existsWithId(UUID id) {
+        return findByIdOptional(id).isPresent();
     }
-
-    @Override
-    public boolean deleteById(UUID uuid) {
-        return PanacheRepositoryBase.super.deleteById(uuid);
-    }
-
-
 }

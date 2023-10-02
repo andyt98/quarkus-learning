@@ -5,9 +5,11 @@ quarkus:
             url: jdbc:postgresql://localhost:5432/postgres
         password: postgres
         username: postgres
-    hibernate-orm:
-        database:
-            generation: drop-and-create
+
+    flyway:
+        migrate-at-start: true
+        baseline-version: 0
+        baseline-on-migrate: true
 
 example:
     greeting: Hello world

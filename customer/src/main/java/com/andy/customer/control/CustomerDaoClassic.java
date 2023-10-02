@@ -1,7 +1,6 @@
 package com.andy.customer.control;
 
 
-
 import com.andy.customer.entity.Customer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,6 +24,12 @@ public class CustomerDaoClassic implements CustomerDao {
     EntityManager entityManager;
 
     @Override
+    public List<Customer> listAll() {
+        return entityManager.createQuery("SELECT c FROM Customer c", Customer.class)
+                .getResultList();
+    }
+
+    @Override
     public Optional<Customer> findByIdOptional(UUID id) {
         return Optional.ofNullable(entityManager.find(Customer.class, id));
     }
@@ -45,12 +50,6 @@ public class CustomerDaoClassic implements CustomerDao {
     }
 
     @Override
-    public List<Customer> listAll() {
-        return entityManager.createQuery("SELECT c FROM Customer c", Customer.class)
-                .getResultList();
-    }
-
-    @Override
     public boolean existsWithId(UUID uuid) {
         TypedQuery<Long> query = entityManager.createQuery(
                 "SELECT COUNT(c) FROM Customer c WHERE c.uuid = :customerId",
@@ -61,7 +60,6 @@ public class CustomerDaoClassic implements CustomerDao {
         Long count = query.getSingleResult();
         return count > 0;
     }
-
 
     @Override
     public boolean existsWithEmail(String email) {
@@ -81,7 +79,6 @@ public class CustomerDaoClassic implements CustomerDao {
     public void persist(Customer customer) {
         entityManager.persist(customer);
     }
-
 
     @Override
     @Transactional

@@ -10,6 +10,7 @@ import com.andy.customer.exception.ErrorMessages;
 import com.andy.customer.exception.ResourceNotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,14 +20,14 @@ import java.util.stream.Collectors;
 public class CustomerService {
 
     @Inject
-    CustomerDao customerDAO;
+    CustomerRepository customerRepository;
 
     @Inject
     CustomerMapper customerMapper;
 
 
     public List<CustomerDto> findAll() {
-        return customerDAO
+        return customerRepository
                 .listAll()
                 .stream()
                 .map(customerMapper::toDTO)
@@ -34,7 +35,7 @@ public class CustomerService {
     }
 
     public CustomerDto findById(UUID id) {
-        return customerDAO
+        return customerRepository
                 .findByIdOptional(id)
                 .map(customerMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -43,7 +44,7 @@ public class CustomerService {
     }
 
     public CustomerDto findByEmail(String email) {
-        return customerDAO
+        return customerRepository
                 .findByEmailOptional(email)
                 .map(customerMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -51,28 +52,31 @@ public class CustomerService {
                 );
     }
 
+    @Transactional
     public void create(CustomerCreateRequest createCustomerRequest) {
         String email = createCustomerRequest.getEmail();
-        if (customerDAO.existsWithEmail(email)) {
-            throw new DuplicateResourceException(ErrorMessages.CUSTOMER_NOT_FOUND.message());
+        if (customerRepository.existsWithEmail(email)) {
+            throw new DuplicateResourceException(ErrorMessages.EMAIL_ALREADY_TAKEN.message());
         }
 
         Customer customer = new Customer(
                 createCustomerRequest.getUsername(),
                 email,
                 createCustomerRequest.getCustomerType()
-        );
+         );
 
-        customerDAO.persist(customer);
+        customerRepository.persist(customer);
     }
 
+
+    @Transactional
     public void delete(UUID id) {
-        if (!customerDAO.existsWithId(id)) {
+        if (!customerRepository.existsWithId(id)) {
             throw new ResourceNotFoundException(
                     String.format(ErrorMessages.CUSTOMER_NOT_FOUND.message(), "id " + id)
             );
         }
 
-        customerDAO.deleteById(id);
+        customerRepository.deleteById(id);
     }
 }
