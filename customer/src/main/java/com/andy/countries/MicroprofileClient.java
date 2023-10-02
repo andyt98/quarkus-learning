@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 
 @Path("v3.1")
@@ -19,5 +20,9 @@ public interface MicroprofileClient {
     @GET
     @Path("all")
     List<Country> countriesList();
+
+    @GET
+    @Path("all")
+    CompletionStage<List<Country>> countriesListAsync();
 
 }

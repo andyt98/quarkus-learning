@@ -11,6 +11,12 @@ quarkus:
         baseline-version: 0
         baseline-on-migrate: true
 
+mp:
+    context:
+        ThreadContext:
+            cleared: Transaction
+
+
 example:
     greeting: Hello world
     integer: 123

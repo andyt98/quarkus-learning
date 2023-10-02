@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class JaxRsClient {
 
-    public static final String URL = "https://restcountries.com/v3.1/all";
+    public static final String URL = "https://api.first.org/data/v1/countries";
     private Client client;
     private WebTarget allCountriesTarget;
 
@@ -31,6 +31,7 @@ public class JaxRsClient {
                 .build();
         allCountriesTarget = client.target(URL);
     }
+
 
     public List<String> fetchCountryNames() {
         try {

@@ -1,4 +1,4 @@
-package com.andy.configuration;
+package com.andy.hello;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,7 +21,7 @@ public class HelloResource {
 
     @GET
     public String hello(){
-        System.out.println("greeting = " + exampleConfig.greeting());
+        System.out.println("greeting = " + greeting);
         System.out.println("exampleConfig.greeting() = " + exampleConfig.greeting());
         System.out.println("exampleConfig.integer() = " + exampleConfig.integer());
         System.out.println("exampleConfig.boolProperty() = " + exampleConfig.boolProperty());

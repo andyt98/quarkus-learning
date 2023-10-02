@@ -8,10 +8,10 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 @ApplicationScoped
 @Path("countries")
@@ -20,25 +20,24 @@ import java.util.stream.Collectors;
 public class CountriesResource {
 
     @Inject
-    JaxRsClient jaxRsClient;
+    CountriesService countriesService;
 
-    @Inject
-    @RestClient
-    MicroprofileClient microprofileClient;
 
     @GET
     public List<String> getCountriesJaxRs() {
-        return jaxRsClient.fetchCountryNames();
+        return countriesService.getCountriesJaxRs();
     }
 
     @GET
     @Path("/alternative")
     public List<String> getCountriesMicroprofile() {
-        List<Country> countries = microprofileClient.countriesList();
+        return countriesService.getCountriesMicroprofile();
+    }
 
-        return countries.stream()
-                .map(c -> c.getName().getCommon())
-                .collect(Collectors.toList());
+    @GET
+    @Path("/reactive")
+    public CompletionStage<List<String>> getCountriesReactive() throws ExecutionException, InterruptedException {
+        return countriesService.getCountriesReactive();
     }
 
 }

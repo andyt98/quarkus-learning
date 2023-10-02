@@ -1,4 +1,4 @@
-package com.andy.configuration;
+package com.andy.hello;
 
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithName;
