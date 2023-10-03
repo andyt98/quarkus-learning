@@ -1,0 +1,12 @@
+body {
+    font-family: Arial,sans-serif;
+}
+
+main {
+    margin: 2rem auto;
+    width: 60vw;
+}
+
+h1 {
+    font-size: 1.5rem;
+}

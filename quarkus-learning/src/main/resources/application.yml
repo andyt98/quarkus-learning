@@ -1,0 +1,35 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://customerdb:5432/postgres
+    password: postgres
+    username: postgres
+  flyway:
+    migrate-at-start: true
+    baseline-version: 0
+    baseline-on-migrate: true
+
+"%dev":
+  quarkus:
+    datasource:
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/postgres
+
+mp:
+  context:
+    ThreadContext:
+      cleared: Transaction
+
+
+example:
+  greeting: Hello world
+  integer: 123
+  boolean: true
+  origin:
+    name: Colombia
+    continent: South America
+  countries:
+    - Colombia
+    - Ethiopia
+    - Brazil

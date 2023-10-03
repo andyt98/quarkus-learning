@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  customerdb:
+    image: postgres:15.4
+    container_name: customerdb
+    networks:
+      - dkrnet
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    networks:
+      - dkrnet
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - quarkus-service
+
+  quarkus-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quarkus-service
+    networks:
+      - dkrnet
+    ports:
+      - "8080:8080"
+    depends_on:
+      - customerdb
+
+networks:
+    dkrnet:

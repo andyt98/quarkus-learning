@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create customer</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+    <h1>Customer</h1>
+
+
+    <form action="create.html" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required="required"><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required="required"><br>
+
+        <label for="type">Customer Type:</label>
+        <select id="type" name="type" required="required">
+            <option value="">Please select</option>
+            {#for type in types}
+                <option value="{type}">{type.name().toLowerCase()}</option>
+            {/for}
+        </select>
+
+        <input type="submit" value="Create">
+    </form>
+</main>
+</body>
+</html>
