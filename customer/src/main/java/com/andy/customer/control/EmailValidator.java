@@ -20,6 +20,6 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
         // Define your email validation logic here
         // For example, you can use a regular expression to validate the email format
         // Here, we'll use a simple example for demonstration purposes
-        return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$");
     }
 }

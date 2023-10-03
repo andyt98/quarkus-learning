@@ -1,5 +1,6 @@
 package com.andy.customer.entity;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class CustomerDto {
@@ -8,14 +9,17 @@ public class CustomerDto {
     private String email;
     private CustomerType customerType;
 
+    private Instant createdAt;
+
     public CustomerDto() {
     }
 
-    public CustomerDto(UUID uuid, String name, String email, CustomerType customerType) {
+    public CustomerDto(UUID uuid, String name, String email, CustomerType customerType, Instant createdAt) {
         this.uuid = uuid;
         this.name = name;
         this.email = email;
         this.customerType = customerType;
+        this.createdAt = createdAt;
     }
 
     public UUID getUuid() {
@@ -49,5 +53,12 @@ public class CustomerDto {
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
     }
-    
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

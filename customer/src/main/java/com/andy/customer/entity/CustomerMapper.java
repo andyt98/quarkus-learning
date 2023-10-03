@@ -9,7 +9,8 @@ public class CustomerMapper {
         return new CustomerDto(customer.getUuid(),
                 customer.getName(),
                 customer.getEmail(),
-                customer.getCustomerType()
+                customer.getCustomerType(),
+                customer.getCreatedAt()
         );
     }
 
