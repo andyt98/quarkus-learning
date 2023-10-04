@@ -1,5 +1,6 @@
-package com.andy.customer.entity;
+package com.andy.customer.control;
 
+import com.andy.customer.entity.CustomerType;
 import jakarta.json.bind.serializer.JsonbSerializer;
 import jakarta.json.bind.serializer.SerializationContext;
 import jakarta.json.stream.JsonGenerator;

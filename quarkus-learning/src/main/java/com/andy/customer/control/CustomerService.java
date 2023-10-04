@@ -4,7 +4,6 @@ package com.andy.customer.control;
 import com.andy.customer.entity.Customer;
 import com.andy.customer.entity.CustomerCreateRequest;
 import com.andy.customer.entity.CustomerDto;
-import com.andy.customer.entity.CustomerMapper;
 import com.andy.customer.exception.DuplicateResourceException;
 import com.andy.customer.exception.ErrorMessages;
 import com.andy.customer.exception.ResourceNotFoundException;
