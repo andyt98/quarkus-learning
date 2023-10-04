@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: customerdb
+spec:
+  selector:
+    matchLabels:
+      app: customerdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customerdb
+    spec:
+      containers:
+      - name: customerdb
+        image: postgres:15.4
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: customerdb-credentials
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: customerdb-credentials
+              key: password
+        imagePullPolicy: Always
+      restartPolicy: Always
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: customerdb
+  labels:
+    app: customerdb
+spec:
+  selector:
+    app: customerdb
+  ports:
+  - port: 5432
+    name: postgres
+---

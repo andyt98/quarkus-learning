@@ -1,0 +1,68 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: quarkus-demo
+spec:
+  selector:
+    matchLabels:
+      app: quarkus-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: quarkus-demo
+    spec:
+      containers:
+        - name: quarkus-demo
+          image: andyt98/quarkus-demo
+          imagePullPolicy: Always
+          env:
+            - name: QUARKUS_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: customerdb-credentials
+                  key: username
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: customerdb-credentials
+                  key: password
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /q/health
+      imagePullSecrets:
+        - name: dockerhub-secret
+      restartPolicy: Always
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: quarkus-demo
+  labels:
+    app: quarkus-demo
+spec:
+  selector:
+    app: quarkus-demo
+  ports:
+    - port: 8080
+      name: http
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: quarkus-demo
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: quarkus-demo
+                port:
+                  number: 8080
+---
