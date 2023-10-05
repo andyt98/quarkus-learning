@@ -13,6 +13,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.context.ManagedExecutor;
 import org.eclipse.microprofile.context.ThreadContext;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +38,11 @@ public class CustomerService {
 
     @Inject
     ThreadContext threadContext;
+
+    @Inject
+    @Channel("customer-updates")
+    Emitter<CustomerDto> customerUpdates;
+
 
 
     public List<CustomerDto> findAll() {
@@ -81,10 +88,11 @@ public class CustomerService {
 
 
 //        customerCreatedEvent.fire(customer);
-//        customerCreatedEvent.fireAsync(customer);
 
         customerRepository.persist(customer);
         managedExecutor.execute(threadContext.contextualRunnable(this::sendNotification));
+        customerUpdates.send(customerMapper.toDTO(customer));
+        customerCreatedEvent.fireAsync(customer);
     }
 
 

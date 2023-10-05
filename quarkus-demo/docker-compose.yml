@@ -22,20 +22,20 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    depends_on:
-      - quarkus-service
+#    depends_on:
+#      - quarkus-service
 
-  quarkus-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: quarkus-service
-    networks:
-      - dkrnet
-    ports:
-      - "8080:8080"
-    depends_on:
-      - customerdb
+#  quarkus-service:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: quarkus-service
+#    networks:
+#      - dkrnet
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - customerdb
 
 networks:
     dkrnet:

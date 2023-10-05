@@ -1,12 +1,11 @@
 package com.andy.customer.boundary;
 
+import com.andy.customer.control.CustomerDtoMapper;
 import com.andy.customer.control.CustomerService;
 import com.andy.customer.entity.CustomerCreateRequest;
 import com.andy.customer.entity.CustomerDto;
 import jakarta.inject.Inject;
-import jakarta.json.Json;
 import jakarta.json.JsonArray;
-import jakarta.json.JsonObject;
 import jakarta.json.stream.JsonCollectors;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -27,6 +26,9 @@ public class CustomerResource {
     @Context
     UriInfo uriInfo;
 
+    @Inject
+    CustomerDtoMapper customerDtoMapper;
+
 
     @POST
     public Response createCustomer(@Valid CustomerCreateRequest createCustomerRequest) {
@@ -43,27 +45,10 @@ public class CustomerResource {
 
     @GET
     @Path("/alternative")
-    public JsonArray getAllCustomersAlternative()  {
+    public JsonArray getAllCustomersAlternative() {
         return customerService.findAll().stream()
-                .map(this::mapToJson)
+                .map(customerDtoMapper::toJson)
                 .collect(JsonCollectors.toJsonArray());
-    }
-
-    private JsonObject mapToJson(CustomerDto customerDto) {
-        // Get the base URI from UriInfo
-        URI baseUri = uriInfo.getBaseUri();
-
-        // Construct the customer URI by appending the relative path to the base URI
-        URI customerUri = UriBuilder.fromUri(baseUri).path(CustomerResource.class).path(customerDto.getUuid().toString()).build();
-
-        return Json.createObjectBuilder()
-                .add("uuid", customerDto.getUuid().toString())
-                .add("name", customerDto.getName())
-                .add("email", customerDto.getEmail())
-                .add("type", customerDto.getCustomerType().toString())
-                .add("_links", Json.createObjectBuilder()
-                        .add("self", customerUri.toString()))  // Use the constructed URI
-                .build();
     }
 
 

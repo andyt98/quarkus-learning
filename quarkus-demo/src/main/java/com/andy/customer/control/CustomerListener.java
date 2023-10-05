@@ -22,9 +22,9 @@ public class CustomerListener {
         System.out.println("Created customer: " + customer);
     }
 
-    public void onCreatedCustomerAsync(@Observes @Created Customer customer){
-        LockSupport.parkNanos(2_000_000_000L);
-        System.out.println("Created customer async: " + customer);
-    }
+//    public void onCreatedCustomerAsync(@Observes @Created Customer customer){
+//        LockSupport.parkNanos(2_000_000_000L);
+//        System.out.println("Created customer async: " + customer);
+//    }
 
 }

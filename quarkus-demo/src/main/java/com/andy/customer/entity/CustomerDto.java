@@ -8,7 +8,6 @@ public class CustomerDto {
     private String name;
     private String email;
     private CustomerType customerType;
-
     private Instant createdAt;
 
     public CustomerDto() {
@@ -60,5 +59,16 @@ public class CustomerDto {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "uuid=" + uuid +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", customerType=" + customerType +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
