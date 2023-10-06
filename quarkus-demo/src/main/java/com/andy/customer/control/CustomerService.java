@@ -29,19 +29,19 @@ public class CustomerService {
     @Inject
     CustomerMapper customerMapper;
 
-    @Inject
-    @Created
-    Event<Customer> customerCreatedEvent;
-
-    @Inject
-    ManagedExecutor managedExecutor;
-
-    @Inject
-    ThreadContext threadContext;
-
-    @Inject
-    @Channel("customer-updates")
-    Emitter<CustomerDto> customerUpdates;
+//    @Inject
+//    ManagedExecutor managedExecutor;
+//
+//    @Inject
+//    ThreadContext threadContext;
+//
+//    @Inject
+//    @Channel("customer-updates")
+//    Emitter<CustomerDto> customerUpdates;
+//
+//    @Inject
+//    @Created
+//    Event<Customer> customerCreatedEvent;
 
 
 
@@ -86,13 +86,12 @@ public class CustomerService {
                 createCustomerRequest.getCustomerType()
         );
 
-
-//        customerCreatedEvent.fire(customer);
-
         customerRepository.persist(customer);
-        managedExecutor.execute(threadContext.contextualRunnable(this::sendNotification));
-        customerUpdates.send(customerMapper.toDTO(customer));
-        customerCreatedEvent.fireAsync(customer);
+
+//        managedExecutor.execute(threadContext.contextualRunnable(this::sendNotification));
+//        customerUpdates.send(customerMapper.toDTO(customer));
+//        customerCreatedEvent.fire(customer);
+//        customerCreatedEvent.fireAsync(customer);
     }
 
 
