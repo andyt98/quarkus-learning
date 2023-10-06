@@ -4,6 +4,16 @@ import io.vertx.core.AbstractVerticle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <ol>
+ *   <li>We deploy a new instance of EmptyVerticle every second.</li>
+ *   <li>Deploying a verticle is an asynchronous operation, and there is a variant of the deploy method that supports an asynchronous result.</li>
+ *   <li>We will undeploy a verticle after five seconds.</li>
+ *   <li>Undeploying is very similar to deploying.</li>
+ * </ol>
+ */
+
+
 public class Deployer extends AbstractVerticle {
 
   private final Logger logger = LoggerFactory.getLogger(Deployer.class);
