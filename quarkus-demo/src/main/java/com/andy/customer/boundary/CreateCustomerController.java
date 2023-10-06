@@ -7,6 +7,7 @@ import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.smallrye.common.annotation.Blocking;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -23,6 +24,7 @@ import java.util.Set;
 @Path("create.html")
 @Produces(MediaType.TEXT_HTML)
 @Blocking
+//@RolesAllowed("admin")
 public class CreateCustomerController {
 
     @Location("create.html")

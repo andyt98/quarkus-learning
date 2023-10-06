@@ -13,7 +13,9 @@
         <p><i>No customers available</i></p>
     {/if}
 
+    {#if user.hasRole('admin')}
     <a href="create.html">Create new customer</a>
+    {/if}
 
     <ul>
         {#for customer in customers}

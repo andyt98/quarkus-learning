@@ -9,6 +9,37 @@ quarkus:
     migrate-at-start: true
     baseline-version: 0
     baseline-on-migrate: true
+  http:
+    header:
+      "X-My-Header":
+        value: hello
+    auth:
+      policy:
+        admin-authenticated:
+          roles-allowed: admin
+      permission:
+        authenticated:
+          paths: /*
+          policy: authenticated
+        admin-authenticated:
+          paths: /create.html
+          policy: admin-authenticated
+        permitted:
+          paths:
+            - "/"
+            - "/style.css"
+            - "/images"
+          policy: permit
+
+  security:
+    users:
+      file:
+        enabled: true
+        users: test-users.properties
+        roles: test-roles.properties
+        realm-name: Quarkus Demo
+        plain-text: true
+
 ###  for remote dev mode ###
 #  package:
 #    type: mutable-jar
