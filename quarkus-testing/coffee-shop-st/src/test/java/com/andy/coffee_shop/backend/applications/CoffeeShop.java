@@ -65,8 +65,8 @@ public class CoffeeShop {
 
     public URI createOrder(Order order) {
         JsonObject json = Json.createObjectBuilder()
-                .add("type", order.type)
-                .add("origin", order.origin)
+                .add("type", order.getType())
+                .add("origin", order.getOrigin())
                 .build();
 
         Response response = baseTarget.path("orders")

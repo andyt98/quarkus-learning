@@ -2,8 +2,8 @@ package com.andy.coffee_shop.backend.entity;
 
 public class Order {
 
-    public String type;
-    public String origin;
+    private String type;
+    private String origin;
 
     public Order(String type, String origin) {
         this.type = type;
@@ -11,5 +11,21 @@ public class Order {
     }
 
     public Order() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

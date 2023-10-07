@@ -26,8 +26,8 @@ public class CreateOrderTest {
 
         Order order = coffeeShop.retrieveOrder(id);
 
-        assertThat(order.type).isEqualTo("Espresso");
-        assertThat(order.origin).isEqualTo("Colombia");
+        assertThat(order.getType()).isEqualTo("Espresso");
+        assertThat(order.getOrigin()).isEqualTo("Colombia");
     }
 
     @AfterEach
