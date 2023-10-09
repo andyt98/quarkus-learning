@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,9 +80,18 @@ public class CoffeeShop {
     }
 
     public Order retrieveOrder(URI orderId) {
-        Order order = client.target(orderId)
+        return client.target(orderId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Order.class);
-        return order;
+    }
+
+    public List<URI> getOrders() {
+        return baseTarget.path("orders")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(JsonArray.class)
+                .getValuesAs(JsonObject.class)
+                .stream()
+                .map(jsonObject -> URI.create(jsonObject.getString("_self")))
+                .toList();
     }
 }

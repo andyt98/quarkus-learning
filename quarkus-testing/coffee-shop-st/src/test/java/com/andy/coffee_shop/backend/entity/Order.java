@@ -4,6 +4,7 @@ public class Order {
 
     private String type;
     private String origin;
+    private String status;
 
     public Order(String type, String origin) {
         this.type = type;
@@ -27,5 +28,13 @@ public class Order {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
