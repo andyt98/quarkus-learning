@@ -4,9 +4,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-    }
 }
 
 dependencies {
@@ -22,6 +19,7 @@ tasks.create<JavaExec>("run") {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.wrapper {

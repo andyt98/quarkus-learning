@@ -1,4 +1,4 @@
-package com.andy.vertx_learning.p2_verticles;
+package com.andy.vertx_learning.p2_verticles.worker;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
@@ -39,6 +39,6 @@ public class WorkerVerticle extends AbstractVerticle{
     DeploymentOptions opts = new DeploymentOptions()
       .setInstances(2)
       .setWorker(true);
-    vertx.deployVerticle("com.andy.vertx_learning.p2_verticles.WorkerVerticle", opts);
+    vertx.deployVerticle("com.andy.vertx_learning.p2_verticles.worker.WorkerVerticle", opts);
   }
 }

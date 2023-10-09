@@ -1,4 +1,4 @@
-package com.andy.vertx_learning.p2_verticles;
+package com.andy.vertx_learning.p2_verticles.blocker;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
