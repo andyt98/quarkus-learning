@@ -1,8 +1,12 @@
 package com.andy.coffee_shop.backend.applications;
 
+import com.andy.coffee_shop.backend.entity.Order;
 import com.github.tomakehurst.wiremock.matching.StringValuePattern;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import jakarta.json.Json;
+import jakarta.json.JsonReader;
 
+import java.io.StringReader;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,7 @@ import java.util.Map;
 import static com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 
@@ -26,6 +31,7 @@ public class Barista {
 
     public void answerForOrder(URI orderUri, String status) {
         String orderId = extractOrderId(orderUri);
+        removeServeEvents(postRequestedFor(urlEqualTo("/processes")).withRequestBody(requestJson(orderId)));
         stubFor(post("/processes")
                 .withRequestBody(requestJson(orderId))
                 .willReturn(okForJson(Map.of("status", status))));
@@ -65,4 +71,29 @@ public class Barista {
         return string.substring(string.lastIndexOf('/') + 1);
     }
 
+    public void debug(URI orderUri) {
+        String orderId = extractOrderId(orderUri);
+        getAllServeEvents().stream()
+                .filter(e -> e.getRequest().getBodyAsString().contains(orderId))
+                .forEach(e -> {
+                    System.out.println(e.getRequest().getBodyAsString());
+                    System.out.println(e.getResponse().getStatus());
+                    System.out.println(e.getResponse().getBodyAsString());
+                });
+    }
+
+    public void verifyRequests(URI orderUri, Order order) {
+        String orderId = extractOrderId(orderUri);
+        findAll(anyRequestedFor(anyUrl())).stream()
+                .map(r -> {
+                    JsonReader reader = Json.createReader(new StringReader(r.getBodyAsString()));
+                    return reader.readObject();
+                })
+                .filter(j -> j.getString("order").equals(orderId))
+                .forEach(r -> {
+                    assertThat(r.getString("type")).isEqualTo(order.getType().toUpperCase());
+                    assertThat(r.getString("origin")).isEqualTo(order.getOrigin().toUpperCase());
+                    assertThat(r.getString("status")).isIn("PREPARING", "FINISHED");
+                });
+    }
 }
