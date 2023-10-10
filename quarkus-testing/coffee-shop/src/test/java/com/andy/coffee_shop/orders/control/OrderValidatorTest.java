@@ -29,52 +29,95 @@ class OrderValidatorTest {
 
     @BeforeEach
     void setUp() {
+        // Creating an instance of the OrderValidator under test
         validator = new OrderValidator();
+
+        // Creating a mock object of the CoffeeShop class
         validator.coffeeShop = mock(CoffeeShop.class);
+
+        // Configuring the mock object behavior
         EnumSet<CoffeeType> coffeeTypes = EnumSet.allOf(CoffeeType.class);
         when(validator.coffeeShop.getCoffeeTypes()).thenReturn(coffeeTypes);
         when(validator.coffeeShop.getOrigin(anyString())).then(i -> {
+            // Stubbing the behavior of the getOrigin() method
             String name = i.getArgument(0);
             Origin origin = new Origin(name);
             origin.getCoffeeTypes().addAll(coffeeTypes);
             return origin;
         });
+
+        // Creating a mock object of the ConstraintValidatorContext class
         context = mock(ConstraintValidatorContext.class);
     }
 
     @Test
     void empty_json_not_valid() {
+
+        // given
         JsonObject json = Json.createObjectBuilder().build();
-        assertThat(validator.isValid(json, context)).isFalse();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isFalse();
     }
 
     @Test
     void missing_type_not_valid() {
+
+        // given
         JsonObject json = Json.createObjectBuilder().add("origin", "Colombia").build();
-        assertThat(validator.isValid(json, context)).isFalse();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isFalse();
     }
 
     @Test
     void missing_origin_not_valid() {
+
+        // given
         JsonObject json = Json.createObjectBuilder().add("type", "Espresso").build();
-        assertThat(validator.isValid(json, context)).isFalse();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isFalse();
     }
 
     @Test
     void valid_json() {
+
+        // given
         JsonObject json = Json.createObjectBuilder()
                 .add("type", "Espresso")
                 .add("origin", "Ethiopia")
                 .build();
-        assertThat(validator.isValid(json, context)).isTrue();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isTrue();
     }
 
 
     @ParameterizedTest
     @MethodSource("validData")
-    void valid_data(String json) {
-        JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
-        assertThat(validator.isValid(jsonObject, context)).isTrue();
+    void valid_data(String jsonString) {
+
+        //given
+        JsonObject json = Json.createReader(new StringReader(jsonString)).readObject();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isTrue();
     }
 
     public static Collection<String> validData() {
@@ -105,9 +148,16 @@ class OrderValidatorTest {
 
     @ParameterizedTest
     @MethodSource("invalidData")
-    void should_reject_invalid_data(String json) {
-        JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
-        assertThat(validator.isValid(jsonObject, context)).isFalse();
+    void should_reject_invalid_data(String jsonString) {
+
+        // given
+        JsonObject json = Json.createReader(new StringReader(jsonString)).readObject();
+
+        // when
+        boolean valid = validator.isValid(json, context);
+
+        // then
+        assertThat(valid).isFalse();
     }
 
     public static Collection<String> invalidData() {
