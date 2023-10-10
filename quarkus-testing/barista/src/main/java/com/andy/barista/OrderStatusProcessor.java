@@ -6,16 +6,11 @@ import javax.enterprise.context.ApplicationScoped;
 public class OrderStatusProcessor {
 
     public String process(final String status) {
-        switch (status) {
-            case "PREPARING":
-                return "FINISHED";
-            case "FINISHED":
-                return "COLLECTED";
-            case "COLLECTED":
-                return "COLLECTED";
-            default:
-                throw new IllegalArgumentException("Unknown status " + status);
-        }
+        return switch (status) {
+            case "PREPARING" -> "FINISHED";
+            case "FINISHED", "COLLECTED" -> "COLLECTED";
+            default -> throw new IllegalArgumentException("Unknown status " + status);
+        };
     }
 
 }

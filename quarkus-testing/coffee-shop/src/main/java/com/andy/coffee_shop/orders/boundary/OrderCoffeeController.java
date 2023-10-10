@@ -33,7 +33,8 @@ public class OrderCoffeeController {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response submit(@FormParam("type") @DefaultValue("") String type, @FormParam("origin") @DefaultValue("") String originName) {
+    public Response submit(@FormParam("type") @DefaultValue("") String type,
+                           @FormParam("origin") @DefaultValue("") String originName) {
         CoffeeType coffeeType = CoffeeType.fromString(type);
         Origin origin = new Origin(originName);
         Order order = new Order(UUID.randomUUID(), coffeeType, origin);
