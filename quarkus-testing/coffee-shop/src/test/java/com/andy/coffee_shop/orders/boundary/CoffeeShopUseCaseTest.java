@@ -11,21 +11,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+// Example of Use Case Test using TestDoubles
 public class CoffeeShopUseCaseTest {
 
-    private CoffeeShopTestDouble coffeeShop;
+    private CoffeeShopTestDouble underTest;
 
     @BeforeEach
     void setUp() {
         OrderProcessorTestDouble orderProcessor = new OrderProcessorTestDouble();
-        coffeeShop = new CoffeeShopTestDouble(orderProcessor);
+        underTest = new CoffeeShopTestDouble(orderProcessor);
     }
 
     @Test
     void verify_createOrder() {
         Order order = new Order();
-        coffeeShop.createOrder(order);
-        coffeeShop.verifyCreateOrder(order);
+        underTest.createOrder(order);
+        underTest.verifyCreateOrder(order);
     }
 
     @Test
@@ -34,11 +35,11 @@ public class CoffeeShopUseCaseTest {
                 new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Colombia")),
                 new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Ethiopia")));
 
-        coffeeShop.answerForUnfinishedOrders(orders);
+        underTest.answerForUnfinishedOrders(orders);
 
-        coffeeShop.processUnfinishedOrders();
+        underTest.processUnfinishedOrders();
 
-        coffeeShop.verifyProcessUnfinishedOrders(orders);
+        underTest.verifyProcessUnfinishedOrders(orders);
     }
 
 }

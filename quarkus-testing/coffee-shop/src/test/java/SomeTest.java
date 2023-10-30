@@ -4,6 +4,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("just some simple examples")
 public class SomeTest {
 
     @AfterEach
@@ -83,4 +84,3 @@ public class SomeTest {
         System.out.println("running test 10");
     }
 }
-

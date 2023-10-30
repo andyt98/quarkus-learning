@@ -1,5 +1,6 @@
 package com.andy.coffee_shop.orders.boundary;
 
+import com.andy.coffee_shop.orders.control.OrderProcessor;
 import com.andy.coffee_shop.orders.control.OrderProcessorTestDouble;
 import com.andy.coffee_shop.orders.control.OrderRepository;
 import com.andy.coffee_shop.orders.control.OriginRepository;
@@ -10,9 +11,10 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+
 public class CoffeeShopTestDouble extends CoffeeShop {
 
-    public CoffeeShopTestDouble(OrderProcessorTestDouble orderProcessor) {
+    public CoffeeShopTestDouble(OrderProcessor orderProcessor) {
         this.orderProcessor = orderProcessor;
         orderRepository = mock(OrderRepository.class);
         originRepository = mock(OriginRepository.class);
@@ -26,7 +28,8 @@ public class CoffeeShopTestDouble extends CoffeeShop {
 
     public void answerForUnfinishedOrders(List<Order> orders) {
         when(orderRepository.listUnfinishedOrders()).thenReturn(orders);
-        orders.forEach(order -> when(orderRepository.findById(order.getId())).thenReturn(order));
+        orders.forEach(order ->
+                when(orderRepository.findById(order.getId())).thenReturn(order));
     }
 
     public void verifyProcessUnfinishedOrders(List<Order> orders) {

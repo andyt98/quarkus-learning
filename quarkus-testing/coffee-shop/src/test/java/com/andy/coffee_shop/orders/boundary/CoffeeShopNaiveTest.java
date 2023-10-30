@@ -26,20 +26,20 @@ import static org.mockito.Mockito.*;
 // -> write use case tests with test doubles instead
 class CoffeeShopNaiveTest {
 
-    private CoffeeShop coffeeShop;
+    private CoffeeShop underTest;
     private OrderRepository orderRepository;
     private Barista barista;
     private ArgumentCaptor<Order> orderCaptor;
 
     @BeforeEach
     void setUp() {
-        coffeeShop = new CoffeeShop();
+        underTest = new CoffeeShop();
         OrderProcessor orderProcessor = new OrderProcessor();
 
-        coffeeShop.orderProcessor = orderProcessor;
+        underTest.orderProcessor = orderProcessor;
         orderRepository = mock(OrderRepository.class);
-        coffeeShop.orderRepository = orderRepository;
-        coffeeShop.updatedOrders = mock(Event.class);
+        underTest.orderRepository = orderRepository;
+        underTest.updatedOrders = mock(Event.class);
 
         barista = mock(Barista.class);
         setReflectiveField(orderProcessor, "orderRepository", orderRepository);
@@ -53,9 +53,9 @@ class CoffeeShopNaiveTest {
     @Test
     void testCreateOrder() {
         Order order = new Order();
-        coffeeShop.createOrder(order);
+        underTest.createOrder(order);
         verify(orderRepository).persist(order);
-        verify(coffeeShop.updatedOrders).fire(order);
+        verify(underTest.updatedOrders).fire(order);
     }
 
     @Test
@@ -67,7 +67,7 @@ class CoffeeShopNaiveTest {
         when(orderRepository.listUnfinishedOrders()).thenReturn(orders);
         orders.forEach(o -> when(orderRepository.findById(o.getId())).thenReturn(o));
 
-        coffeeShop.processUnfinishedOrders();
+        underTest.processUnfinishedOrders();
 
         verify(orderRepository).listUnfinishedOrders();
 
