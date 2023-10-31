@@ -59,6 +59,7 @@ public class EntityBuilder {
         final URI typesUri = uriInfo.getBaseUriBuilder().path(TypesResource.class).build();
         final URI ordersUri = uriInfo.getBaseUriBuilder().path(OrdersResource.class).build();
         return Json.createObjectBuilder()
+                .add("hello", "world")
                 .add("_links", Json.createObjectBuilder()
                         .add("types", typesUri.toString()))
                 .add("_actions", Json.createObjectBuilder()

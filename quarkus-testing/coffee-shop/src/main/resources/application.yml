@@ -1,0 +1,30 @@
+barista:
+  url: http://barista:8080/processes
+quarkus:
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://coffee-shop-db:5432/postgres
+    password: postgres
+    username: postgres
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+    sql-load-script: load-data.sql
+  http:
+    test-port: 8082
+
+# This must be commented for remote dev
+#"%dev":
+#  barista:
+#    url: http://localhost:8081/processes
+#  quarkus:
+#    datasource:
+#      jdbc:
+#        url: jdbc:postgresql://localhost:5432/postgres
+
+#"%test":
+#  quarkus:
+#    datasource:
+#      jdbc:
+#        url: jdbc:postgresql://localhost:5432/postgres
