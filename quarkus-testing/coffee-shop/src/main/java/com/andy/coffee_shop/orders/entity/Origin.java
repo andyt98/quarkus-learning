@@ -8,14 +8,14 @@ import java.util.Set;
 @Table(name = "origins")
 public class Origin {
 
-    @Id
-    private String name;
-
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "origin_coffee_types", joinColumns = @JoinColumn(name = "origin_name", nullable = false))
+    @CollectionTable(name = "origin_coffee_types",
+            joinColumns = @JoinColumn(name = "origin_name", nullable = false))
     @Column(name = "coffee_type", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private final Set<CoffeeType>  coffeeTypes = EnumSet.noneOf(CoffeeType.class);
+    private final Set<CoffeeType> coffeeTypes = EnumSet.noneOf(CoffeeType.class);
+    @Id
+    private String name;
 
     public Origin() {
     }
@@ -35,8 +35,8 @@ public class Origin {
     @Override
     public String toString() {
         return "Origin{" +
-               "name='" + name + '\'' +
-               ", coffeeTypes=" + coffeeTypes +
-               '}';
+                "name='" + name + '\'' +
+                ", coffeeTypes=" + coffeeTypes +
+                '}';
     }
 }

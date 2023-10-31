@@ -74,7 +74,8 @@ public class CoffeeShop {
                 .request()
                 .post(Entity.json(json));
 
-        assertThat(response.getStatusInfo().getFamily()).isEqualTo(Response.Status.Family.SUCCESSFUL);
+        assertThat(response.getStatusInfo().getFamily())
+                .isEqualTo(Response.Status.Family.SUCCESSFUL);
 
         return URI.create(response.getHeaderString(LOCATION));
     }

@@ -38,25 +38,24 @@ public class CreateOrderTest {
     void create_order_verify_status_update() {
         Order order = new Order("Espresso", "Colombia");
         URI orderUri = coffeeShop.createOrder(order);
+
         barista.answerForOrder(orderUri, "PREPARING");
         barista.waitForInvocation(orderUri, "PREPARING");
-
         assertThat(coffeeShop.retrieveOrder(orderUri).getStatus()).isEqualTo("Preparing");
         barista.verifyRequests(orderUri, order);
+        barista.debug(orderUri);
 
         barista.answerForOrder(orderUri, "FINISHED");
         barista.waitForInvocation(orderUri, "PREPARING");
-
         assertThat(coffeeShop.retrieveOrder(orderUri).getStatus()).isEqualTo("Finished");
         barista.verifyRequests(orderUri, order);
+        barista.debug(orderUri);
 
         barista.answerForOrder(orderUri, "COLLECTED");
         barista.waitForInvocation(orderUri, "FINISHED");
-
         assertThat(coffeeShop.retrieveOrder(orderUri).getStatus()).isEqualTo("Collected");
-
         barista.verifyRequests(orderUri, order);
-//        barista.debug(orderUri);
+        barista.debug(orderUri);
     }
 
     @AfterEach

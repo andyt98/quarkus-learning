@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  coffee-shop-db:
+    image: postgres:9.5
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - dkrnet
+
+  barista:
+    image: barista
+    restart: always
+    depends_on:
+      - coffee-shop-db
+    ports:
+      - "8081:8080"
+    networks:
+      - dkrnet
+
+  coffee-shop:
+    image: coffee-shop
+    restart: always
+    depends_on:
+      - coffee-shop-db
+    ports:
+      - "8080:8080"
+    networks:
+      - dkrnet
+
+networks:
+  dkrnet:

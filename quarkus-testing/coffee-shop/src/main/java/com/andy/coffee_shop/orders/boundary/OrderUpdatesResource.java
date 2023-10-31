@@ -36,7 +36,8 @@ public class OrderUpdatesResource {
     }
 
     public void onUpdatedOrder(@Observes(during = TransactionPhase.AFTER_COMPLETION) Order order) {
-        OutboundSseEvent event = sse.newEventBuilder().name("update").data("/orders/" + order.getId()).build();
+        OutboundSseEvent event = sse.newEventBuilder().name("update")
+                .data("/orders/" + order.getId()).build();
         broadcaster.broadcast(event);
     }
 

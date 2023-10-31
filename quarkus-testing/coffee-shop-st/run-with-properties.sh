@@ -1,1 +1,0 @@
-mvn verify -Dtest.coffee-shop.host=localhost -Dtest.coffee-shop.port=8080
