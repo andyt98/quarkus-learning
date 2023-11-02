@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  expense-service:
+    image: quay.io/expense-service:1.0.0-SNAPSHOT
+    container_name: expense-service
+    ports:
+      - "8080:8080"
+    networks:
+      - expense-net
+
+  expense-client:
+    image: quay.io/expense-client:1.0.0-SNAPSHOT
+    container_name: expense-client
+    environment:
+      QUARKUS_REST_CLIENT__COM_REDHAT_TRAINING_EXPENSESERVICECLIENT__URL: "http://expense-service:8080"
+    ports:
+      - "8090:8090"
+    networks:
+      - expense-net
+
+networks:
+  expense-net:
