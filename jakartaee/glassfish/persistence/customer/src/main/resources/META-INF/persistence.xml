@@ -1,0 +1,25 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <persistence-unit name="postgresPU" transaction-type="JTA">
+        <jta-data-source>jdbc/postgres</jta-data-source>
+
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+            <property name="jakarta.persistence.schema-generation.create-source"
+                      value="script-then-metadata"/>
+            <property name="jakarta.persistence.schema-generation.create-script-source"
+                      value="META-INF/sql/create.sql"/>
+            <property name="jakarta.persistence.sql-load-script-source"
+                      value="META-INF/sql/data.sql"/>
+            <property name="jakarta.persistence.schema-generation.drop-source"
+                      value="script-then-metadata"/>
+            <property name="jakarta.persistence.schema-generation.drop-script-source"
+                      value="META-INF/sql/drop.sql"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server>
+    <featureManager>
+        <feature>jsonb-3.0</feature>
+        <feature>restfulWS-3.1</feature>
+        <feature>persistence-3.1</feature>
+        <feature>cdi-4.0</feature>
+        <feature>mpOpenAPI-3.1</feature>
+        <feature>beanValidation-3.0</feature>
+    </featureManager>
+
+    <library id="jdbcLib">
+        <fileset dir="jdbc" includes="*.jar"/>
+    </library>
+
+    <dataSource id="DefaultDataSource" jndiName="jdbc/postgres">
+        <jdbcDriver libraryRef="jdbcLib"/>
+        <properties.postgresql databaseName="postgres" password="postgres" portNumber="5432" serverName="localhost" user="postgres"/>
+    </dataSource>
+
+</server>

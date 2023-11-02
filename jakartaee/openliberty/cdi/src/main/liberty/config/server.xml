@@ -1,0 +1,10 @@
+<server description="Intro REST Guide Liberty server">
+    <featureManager>
+        <feature>cdi-4.0</feature>
+        <feature>restfulWS-3.1</feature>
+    </featureManager>
+
+
+    <webApplication location="cdi.war" contextRoot="cdi"/>
+
+</server>

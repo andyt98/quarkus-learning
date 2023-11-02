@@ -11,10 +11,15 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.sse.InboundSseEvent;
+import jakarta.ws.rs.sse.SseEventSource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
@@ -24,6 +29,8 @@ public class CoffeeShop {
 
     private final Client client;
     private final WebTarget baseTarget;
+    private final Queue<URI> updatedOrders = new ConcurrentLinkedDeque<>();
+    private SseEventSource updateSource;
 
     public CoffeeShop() {
         client = ClientBuilder.newClient();
@@ -94,5 +101,27 @@ public class CoffeeShop {
                 .stream()
                 .map(jsonObject -> URI.create(jsonObject.getString("_self")))
                 .toList();
+    }
+
+
+    public void registerOrderUpdates() {
+        registerOrderUpdates(ev -> {
+            if ("updated".equals(ev.getName())) {
+                System.out.printf("data: %s, name: %s%n", ev.readData(String.class), ev.getName());
+                updatedOrders.add(URI.create(buildBaseUri().toString() + ev.readData(String.class)));
+            }
+
+        });
+    }
+
+    private void registerOrderUpdates(Consumer<InboundSseEvent> eventConsumer) {
+        if (updateSource == null) {
+            updateSource = SseEventSource.target(baseTarget.path("orders/updates")).build();
+        }
+        updateSource.register(eventConsumer, throwable -> {
+            System.err.println("Error in SSE updates");
+            throw new RuntimeException(throwable);
+        });
+        updateSource.open();
     }
 }
