@@ -20,7 +20,6 @@ repositories {
 val vertxVersion = "4.4.2"
 val junitJupiterVersion = "5.9.3"
 val jacksonVersion = "2.15.0"
-
 val mainVerticleName = "com.andy.vertx_starter.MainVerticle"
 val watchForChange = "src/**/*"
 val doOnChange = "./gradlew classes"
@@ -57,7 +56,7 @@ jib {
         image = "amazoncorretto:17"
     }
     to {
-        image = "example/jib/vertx-starter"
+        image = "example/jib/vertx-basics"
     }
     container {
         mainClass = "io.vertx.core.Launcher"
@@ -85,8 +84,4 @@ tasks.withType<Test> {
 
 tasks.withType<JavaExec> {
     args = listOf("run", mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$launcherClassName", "--on-redeploy=$doOnChange")
-}
-
-tasks.wrapper {
-    gradleVersion = "7.6"
 }

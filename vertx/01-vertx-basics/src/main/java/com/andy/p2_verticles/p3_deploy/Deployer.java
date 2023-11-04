@@ -1,4 +1,4 @@
-package com.andy.p2_verticles.deploy;
+package com.andy.p2_verticles.p3_deploy;
 
 import io.vertx.core.AbstractVerticle;
 import org.slf4j.Logger;

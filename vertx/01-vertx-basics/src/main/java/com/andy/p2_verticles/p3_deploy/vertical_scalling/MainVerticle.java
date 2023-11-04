@@ -1,6 +1,6 @@
-package com.andy.p2_verticles.vertical_scalling;
+package com.andy.p2_verticles.p3_deploy.vertical_scalling;
 
-import com.andy.p2_verticles.hello.HelloVerticle;
+import com.andy.p2_verticles.p1_hello.HelloVerticle;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Promise;

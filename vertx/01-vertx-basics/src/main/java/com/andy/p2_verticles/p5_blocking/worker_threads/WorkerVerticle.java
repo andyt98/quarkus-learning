@@ -1,4 +1,4 @@
-package com.andy.p2_verticles.worker;
+package com.andy.p2_verticles.p5_blocking.worker_threads;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
@@ -26,7 +26,7 @@ public class WorkerVerticle extends AbstractVerticle {
         DeploymentOptions opts = new DeploymentOptions()
                 .setInstances(2)
                 .setWorker(true);
-        vertx.deployVerticle("com.andy.vertx_learning.p2_verticles.worker.WorkerVerticle", opts);
+        vertx.deployVerticle(WorkerVerticle.class.getName(), opts);
     }
 
     @Override

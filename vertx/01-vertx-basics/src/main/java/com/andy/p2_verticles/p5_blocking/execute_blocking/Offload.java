@@ -1,4 +1,4 @@
-package com.andy.p2_verticles.execute_blocking;
+package com.andy.p2_verticles.p5_blocking.execute_blocking;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;

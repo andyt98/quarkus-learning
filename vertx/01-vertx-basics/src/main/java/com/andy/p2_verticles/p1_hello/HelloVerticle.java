@@ -1,4 +1,4 @@
-package com.andy.p2_verticles.hello;
+package com.andy.p2_verticles.p1_hello;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;

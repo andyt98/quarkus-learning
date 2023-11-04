@@ -1,4 +1,4 @@
-package com.andy.p2_verticles.deployment_options;
+package com.andy.p2_verticles.p4_deployment_options;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
@@ -36,7 +36,7 @@ public class SampleVerticle extends AbstractVerticle {
             DeploymentOptions opts = new DeploymentOptions()
                     .setConfig(conf)
                     .setInstances(n);
-            vertx.deployVerticle("com.andy.vertx_learning.p2_verticles.configuration_data.SampleVerticle", opts);
+            vertx.deployVerticle(SampleVerticle.class.getName(), opts);
         }
     }
 
