@@ -1,0 +1,33 @@
+quarkus:
+  devservices:
+    enabled: false
+'%dev':
+  quarkus:
+    http:
+      port: 8081
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+mp:
+  messaging:
+    incoming:
+      new-bank-accounts-in:
+        auto:
+          offset:
+            reset: earliest
+        connector: smallrye-kafka
+        topic: bank-account-was-created
+        value:
+          deserializer: com.redhat.training.serde.BankAccountWasCreatedDeserializer
+    outgoing:
+      high-risk-alerts-out:
+        connector: smallrye-kafka
+        topic: high-risk-account-was-detected
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+      low-risk-alerts-out:
+        connector: smallrye-kafka
+        topic: low-risk-account-was-detected
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer

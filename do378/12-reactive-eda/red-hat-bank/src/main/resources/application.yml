@@ -1,0 +1,32 @@
+kafka:
+  bootstrap:
+    servers: localhost:9092
+mp:
+  messaging:
+    incoming:
+      new-bank-accounts-in:
+        auto:
+          offset:
+            reset: earliest
+        connector: smallrye-kafka
+        topic: bank-account-was-created
+        value:
+          deserializer: com.redhat.training.serde.BankAccountWasCreatedDeserializer
+    outgoing:
+      new-bank-accounts-out:
+        connector: smallrye-kafka
+        topic: bank-account-was-created
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+quarkus:
+  datasource:
+    db-kind: postgresql
+    password: developer
+    reactive:
+      url: postgresql://localhost:5432/testing
+    username: developer
+  devservices:
+    enabled: false
+  hibernate-orm:
+    database:
+      generation: drop-and-create
