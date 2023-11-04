@@ -1,4 +1,4 @@
-package com.andy.vertx_starter.eventbus;
+package com.andy.vertx_starter.p4_eventbus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

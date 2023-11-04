@@ -1,4 +1,4 @@
-package com.andy.vertx_starter.eventloops;
+package com.andy.vertx_starter.p2_eventloops;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,4 +1,4 @@
-package com.andy.vertx_starter.verticles;
+package com.andy.vertx_starter.p1_verticles;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

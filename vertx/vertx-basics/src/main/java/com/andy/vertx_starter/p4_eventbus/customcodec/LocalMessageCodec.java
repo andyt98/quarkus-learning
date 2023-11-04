@@ -1,4 +1,4 @@
-package com.andy.vertx_starter.eventbus.customcodec;
+package com.andy.vertx_starter.p4_eventbus.customcodec;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;

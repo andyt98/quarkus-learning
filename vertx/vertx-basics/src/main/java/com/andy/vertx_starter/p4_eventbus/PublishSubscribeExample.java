@@ -1,4 +1,4 @@
-package com.andy.vertx_starter.eventbus;
+package com.andy.vertx_starter.p4_eventbus;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
