@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heat Sensor</title>
+</head>
+<body>
+<div id="avg"></div>
+<div id="main"></div>
+
+<script>
+
+  /**
+   * This script establishes a connection to a server-sent events (SSE) endpoint provided by the server.
+   * It listens for messages on two different event types: 'update' and 'average'.
+   *
+   * 'update' events are assumed to contain data from individual heat sensors.
+   * Each message contains a sensor ID and the current temperature reading for that sensor.
+   * The script dynamically creates or updates a div element for each sensor displaying its latest temperature.
+   *
+   * 'average' events carry the current average temperature across all sensors.
+   * This script updates the text content of a specific div to reflect the latest average temperature reading.
+   *
+   * This demonstrates a real-time data feed where the client UI is kept up-to-date with the latest data from the server without needing to refresh the page.
+   */
+
+  const sse = new EventSource("/sse")
+  const main = document.getElementById("main")
+  const avg = document.getElementById("avg")
+
+  sse.addEventListener("update", (evt) => {
+    const data = JSON.parse(evt.data)
+    let div = document.getElementById(data.id);
+    if (div === null) {
+      div = document.createElement("div")
+      div.setAttribute("id", data.id)
+      main.appendChild(div)
+    }
+    div.innerHTML = `<strong>${data.temp.toFixed(2)}</strong> (<em>${data.id}</em>)`
+  })
+
+  sse.addEventListener("average", (evt) => {
+    const data = JSON.parse(evt.data)
+    avg.innerText = `Average = ${data.average.toFixed(2)}`
+  })
+
+</script>
+
+</body>
+</html>
