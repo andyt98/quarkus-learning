@@ -16,7 +16,20 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * The Jukebox class is a Vert.x verticle that simulates a music jukebox.
+ * It allows for tracks to be listed, scheduled for playback, and managed via an EventBus.
+ * It also includes functionality to stream audio to HTTP clients and support file downloads.
+ * <p>
+ * The class demonstrates the use of Vert.x's event-driven nature and the implementation of backpressure for
+ * stream handling. The EventBus is used to communicate between different parts of the application,
+ * while streaming is managed by writing chunks of audio to HTTP responses.
+ * <p>
+ * Backpressure is implicitly handled in the streaming part, where if the response's write queue is full,
+ * the file reading is paused, and it is resumed once the queue is available to receive more data. This ensures
+ * that the system does not run out of memory or lose data if the client cannot process the data as fast as it is
+ * being sent.
+ */
 public class Jukebox extends AbstractVerticle {
 
     public static final String TRACKS_PATH = "tracks";
@@ -130,6 +143,22 @@ public class Jukebox extends AbstractVerticle {
         });
     }
 
+
+    /**
+     * Handles the download of a file by streaming it to the HTTP server response.
+     * This method demonstrates the concept of backpressure in an asynchronous, non-blocking IO operation.
+     * <p>
+     * As the file is read, chunks of data (buffers) are written to the HTTP response. If at any point the response
+     * indicates that its write queue is full (a condition of backpressure), the reading from the file is paused
+     * to avoid overwhelming the client. Once the client has caught up and the write queue of the response is
+     * ready to handle more data, the reading from the file is resumed.
+     * <p>
+     * This mechanism ensures that the server does not run out of memory by trying to load too much data into the
+     * response buffer and that the client is not overwhelmed by data it may not be able to process quickly enough.
+     *
+     * @param file    The AsyncFile instance representing the file to be downloaded.
+     * @param request The HttpServerRequest instance representing the client's request for the file.
+     */
     private void downloadFile(AsyncFile file, HttpServerRequest request) {
         HttpServerResponse response = request.response();
         response.setStatusCode(200)
@@ -147,6 +176,17 @@ public class Jukebox extends AbstractVerticle {
         file.endHandler(v -> response.end());
     }
 
+    /**
+     * Streams the contents of a file to the HTTP response using Vert.x's pipeTo feature.
+     * The pipeTo method automatically manages backpressure, ensuring that the server does
+     * not read from the file faster than the response can write to the client.
+     * <p>
+     * This approach is advantageous because it requires less boilerplate code and reduces
+     * the complexity of handling the data flow control manually.
+     *
+     * @param file    The AsyncFile instance representing the file to be streamed to the client.
+     * @param request The HttpServerRequest instance representing the client's request.
+     */
     private void downloadFilePipe(AsyncFile file, HttpServerRequest request) {
         HttpServerResponse response = request.response();
         response.setStatusCode(200)
@@ -193,6 +233,19 @@ public class Jukebox extends AbstractVerticle {
         currentFile = null;
     }
 
+    /**
+     * Processes the buffer read from the current file and writes it to all connected streamers.
+     * This method ensures that we do not overload the client by checking if the write queue of
+     * the streamer is full before writing to it. If the write queue is full, the method does
+     * not write to that streamer, effectively implementing a simple form of backpressure.
+     * <p>
+     * Backpressure is a flow control mechanism that prevents overwhelming the receiver (streamer)
+     * with data faster than it can process. This manual check helps to avoid buffer overflow and
+     * potential out-of-memory errors that may occur if the server continuously sends data without
+     * regard for the receiver's capacity to handle it.
+     *
+     * @param buffer The Buffer instance containing the data read from the file.
+     */
     private void processReadBuffer(Buffer buffer) {
         logger.info("Read {} bytes from pos {}", buffer.length(), positionInFile);
         positionInFile += buffer.length();

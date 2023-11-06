@@ -8,8 +8,6 @@ import io.vertx.core.parsetools.RecordParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-// netcat localhost 3000
 public class NetControl extends AbstractVerticle {
 
 
