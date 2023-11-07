@@ -1,4 +1,4 @@
-package com.andy.p4_event_streams.p2_jukebox;
+package com.andy.p4_event_streams.p3_jukebox;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.buffer.Buffer;
@@ -8,6 +8,12 @@ import io.vertx.core.parsetools.RecordParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * NetControl is a Vert.x verticle that handles TCP connections for controlling
+ * a jukebox application. It uses a NetServer to accept connections on port 3000
+ * and parses incoming data as commands using RecordParser to delineate messages
+ * by newline characters.
+ */
 public class NetControl extends AbstractVerticle {
 
 
@@ -21,6 +27,12 @@ public class NetControl extends AbstractVerticle {
                 .listen(3000);
     }
 
+    /**
+     * Handles a new client connection. Sets up a RecordParser to parse incoming
+     * data based on delimiter (newline) and passes the parsed buffer to handleBuffer.
+     *
+     * @param socket The NetSocket representing the client connection.
+     */
     private void handleClient(NetSocket socket) {
         logger.info("New connection");
         RecordParser.newDelimited("\n", socket)
@@ -29,6 +41,12 @@ public class NetControl extends AbstractVerticle {
     }
 
 
+    /**
+     * Handles a new client connection. Sets up a RecordParser to parse incoming
+     * data based on delimiter (newline) and passes the parsed buffer to handleBuffer.
+     *
+     * @param socket The NetSocket representing the client connection.
+     */
     private void handleBuffer(NetSocket socket, Buffer buffer) {
         String command = buffer.toString();
         switch (command) {

@@ -1,7 +1,7 @@
 To use this application
 - run the Main class 
 ```shell
-./gradlew run -PmainClass=com.andy.p4_event_streams.p2_jukebox.Main
+./gradlew run -PmainClass=com.andy.p4_event_streams.p3_jukebox.Main
 ```
 - start the jukebox controller with netcat
 ```shell
