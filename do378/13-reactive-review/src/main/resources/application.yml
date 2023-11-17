@@ -1,0 +1,34 @@
+mp:
+  messaging:
+    incoming:
+      new-speakers-in:
+        auto:
+          offset:
+            reset: earliest
+        connector: smallrye-kafka
+        topic: speaker-was-created
+        value:
+          deserializer: com.redhat.training.serde.SpeakerWasCreatedDeserializer
+    outgoing:
+      employees-out:
+        connector: smallrye-kafka
+        topic: employees-signed-up
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+      new-speakers-out:
+        connector: smallrye-kafka
+        topic: speaker-was-created
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+      upstream-members-out:
+        connector: smallrye-kafka
+        topic: upstream-members-signed-up
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+quarkus:
+  datasource:
+    devservices:
+      image-name: postgres:14.1
+  kafka:
+    devservices:
+      image-name: docker.io/vectorized/redpanda:v22.3.4
