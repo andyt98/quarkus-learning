@@ -1,0 +1,11 @@
+mp:
+  jwt:
+    verify:
+      issuer: https://example.com/
+      publickey:
+        location: publicKey.pem
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: privateKey.pem
