@@ -1,0 +1,23 @@
+expense:
+    max-amount: ${EXPENSE_MAX_AMOUNT:2000}
+quarkus:
+    datasource:
+        db-kind: postgresql
+        devservices:
+            image-name: postgres:14.1
+        password: developer
+        username: developer
+    hibernate-orm:
+        database:
+            generation: drop-and-create
+        sql-load-script: META-INF/import.sql
+    oidc:
+        auth-server-url: http://localhost:8888/realms/quarkus
+        client-id: backend-service
+        credentials:
+            secret: secret
+        tls:
+            verification: none
+    security:
+        jaxrs:
+            deny-unannotated-endpoints: true
