@@ -26,5 +26,5 @@ export TOKEN=$(curl --insecure -s -X POST "$SERVER" \
 if [[ "$TOKEN" == "null" ]] || [[ "$TOKEN" == "" ]]; then
   echo 1>&2 "Token was not retrieved! Review input parameters."
 else
-  echo 1>&2 "Token successfully retrieved: $TOKEN"
+  echo 1>&2 "Token successfully retrieved"
 fi
