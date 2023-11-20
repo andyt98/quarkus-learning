@@ -1,0 +1,17 @@
+quarkus:
+  container-image:
+    group: deploy-source
+  http:
+    port: 8090
+  openshift:
+    build-strategy: docker
+    deployment-kind: Deployment
+    env:
+      configmaps: expense-client-config
+  rest-client:
+    '"com':
+      redhat:
+        training:
+          client:
+            ExpenseServiceClient":
+              url: ${EXPENSE_SVC:localhost:8080}

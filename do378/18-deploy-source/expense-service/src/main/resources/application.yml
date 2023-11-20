@@ -1,0 +1,8 @@
+quarkus:
+  container-image:
+    group: deploy-source
+  openshift:
+    build-strategy: docker
+    deployment-kind: Deployment
+  swagger-ui:
+    always-include: true
