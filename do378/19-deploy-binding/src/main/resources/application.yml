@@ -1,0 +1,18 @@
+quarkus:
+    devservices:
+        enabled: false
+    hibernate-orm:
+        database:
+            generation: drop-and-create
+    kubernetes:
+        deploy: true
+    kubernetes-service-binding:
+        services:
+            expenses-db:
+                api-version: postgres-operator.crunchydata.com/v1beta1
+                kind: PostgresCluster
+                name: pgcluster
+    openshift:
+        build-strategy: docker
+        route:
+            expose: true
