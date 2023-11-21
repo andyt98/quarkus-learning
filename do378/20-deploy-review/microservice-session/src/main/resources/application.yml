@@ -1,0 +1,16 @@
+quarkus:
+    datasource:
+        db-kind: h2
+        jdbc:
+            url: jdbc:h2:mem:default;DB_CLOSE_DELAY=-1
+    hibernate-orm:
+        database:
+            generation: drop-and-create
+    rest-client:
+        '"com':
+            redhat:
+                training:
+                    conference:
+                        speaker:
+                            SpeakerServiceClient":
+                                url: ${SPEAKER_SVC:http://localhost:8080}

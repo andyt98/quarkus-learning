@@ -1,0 +1,12 @@
+quarkus:
+  devservices:
+    enabled: false
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+  kubernetes-service-binding:
+    services:
+      conference-db:
+        api-version: postgres-operator.crunchydata.com/v1beta1
+        kind: PostgresCluster
+        name: pgcluster
