@@ -1,0 +1,33 @@
+'%dev':
+  quarkus:
+    http:
+      port: 8081
+'%prod':
+  quarkus:
+    rest-client:
+      '"com':
+        redhat:
+          training:
+            conference:
+              session:
+                SpeakerService":
+                  url: http://speaker:8080
+quarkus:
+  datasource:
+    db-kind: postgresql
+    devservices:
+      image-name: postgres:14.1
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+    sql-load-script: META-INF/import-test.sql
+  http:
+    cors: true
+  rest-client:
+    '"com':
+      redhat:
+        training:
+          conference:
+            session:
+              SpeakerService":
+                url: http://localhost:8082
