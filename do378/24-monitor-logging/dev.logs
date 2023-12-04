@@ -1,0 +1,8 @@
+2023-12-338 13:04:32,328 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.5.0) started in 2.284s. Listening on: http://localhost:8080
+2023-12-338 13:04:32,330 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2023-12-338 13:04:32,331 INFO  [Timing.java] Installed features: [cdi, config-yaml, kubernetes, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
+2023-12-338 13:06:24,136 DEBUG [ExpensesResource.java] Getting expense none
+2023-12-338 13:06:24,139 ERROR [ExpensesResource.java] Expense not found: none
+2023-12-338 13:09:11,287 DEBUG [ExpensesResource.java] Getting expense joel-2
+2023-12-338 13:10:20,026 DEBUG [ExpensesResource.java] Getting expense joel-2
+2023-12-338 13:27:40,595 INFO  [Timing.java] expenses stopped in 0.013s

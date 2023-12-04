@@ -1,0 +1,18 @@
+'%dev':
+    quarkus:
+        log:
+            file:
+                enable: true
+                format: '%d %-5p [%F] %m%n'
+                path: ./dev.logs
+                rotation:
+                    rotate-on-boot: false
+quarkus:
+    log:
+        category:
+            '"com':
+                redhat:
+                    training:
+                        expense":
+                            level: DEBUG
+        level: INFO
