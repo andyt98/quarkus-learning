@@ -1,0 +1,32 @@
+'%dev':
+    com:
+        redhat:
+            training:
+                service:
+                    AdderService/mp-rest/url: http://localhost:8081
+                    MultiplierService/mp-rest/url: http://localhost:8082
+                    SolverService/mp-rest/url: http://localhost:8080
+    quarkus:
+        http:
+            port: 8081
+com:
+    redhat:
+        training:
+            service:
+                AdderService/mp-rest/url: http://adder:8080
+                MultiplierService/mp-rest/url: http://multiplier:8080
+                SolverService/mp-rest/url: http://solver:8080
+quarkus:
+    application:
+        name: adder
+    jaeger:
+        endpoint: http://localhost:14268/api/traces
+        propagation: b3
+        reporter-log-spans: true
+        sampler-param: 1
+        sampler-type: const
+        service-name: adder
+    log:
+        console:
+            format: '%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId}, sampled=%X{sampled}
+                [%c{2.}] (%t) %s%e%n'
